@@ -18,8 +18,9 @@ K = np.array([[focal_length, 0, center_x],
 K_inv = np.linalg.inv(K)
 
 def read_specific_frame(video_directory, frame_number):
-    frame_path = os.path.join("/Users/ritamsaha/Desktop/whereabouts/calib_challenge/result_labels",video_directory, f"{frame_number}.jpg")
+    frame_path = f"./{video_directory}/{frame_number}.jpg"
 
+    # Check if the frame exists
     if not os.path.exists(frame_path):
         print(f"Frame {frame_number} does not exist in the directory.")
         return None
@@ -54,10 +55,11 @@ bf = cv2.BFMatcher(cv2.NORM_L2, crossCheck=False)
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 video_writer = cv2.VideoWriter('epipoles.mp4', fourcc, 10.0, (width, height))
 
-dir = "6"
-data = pd.read_csv('/Users/ritamsaha/Desktop/whereabouts/calib_challenge/unlabeled_output_final/'+dir+'.txt', sep=' ', header=None, names=['pitch', 'yaw'])
+dir = "0"
+data = pd.read_csv('../labeled/'+dir+'.txt', sep=' ', header=None, names=['pitch', 'yaw'])
+
 start_frame = 0
-end_frame = 1200
+end_frame = 200
 
 first_frame = read_specific_frame(dir, start_frame)
 first_gray  = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)
